@@ -30,7 +30,8 @@ Bundle-ClassPath: fidoproteininference.jar,
  lib/servlet.jar,
  lib/wsdl4j-1.5.1.jar,
  lib/xercesImpl.jar,
- lib/commons-lang3-3.3.2.jar
+ lib/commons-lang3-3.3.2.jar,
+ src/resources/
 Bundle-Activator: uni.tubingen.fido.FidoProteinInferenceNodePlugin
 Bundle-Vendor: enrique
 Require-Bundle: org.eclipse.core.runtime,
@@ -39,5 +40,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.knime.base
 Bundle-ActivationPolicy: lazy
 Export-Package: uni.tubingen.fido
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 

@@ -190,8 +190,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     	System.out.println(beta_value);
     	System.out.println(gamma_value);
     	
-    	FidoProcess process = FidoProcess.getInstance(new_tmp_psm_graph_file.getAbsolutePath(),
-                alfa_value, beta_value, gamma_value);
+    	FidoProcess process = FidoProcess.getInstance (new_tmp_psm_graph_file.getAbsolutePath (), alfa_value, beta_value, gamma_value);
 
     	HashMap<String, String> protein2p_fido = process.computeProteinInference();
     	
@@ -288,7 +287,10 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     
 	static private String formattedProteinAccesion (String protein_accn){
 	      if(protein_accn.contains("|")){
-	    	  return StringUtils.substringBetween(protein_accn, "|");
+	    	  return StringUtils.substringBeforeLast(protein_accn, "|");
+	      }
+	      else  if(protein_accn.contains(" ")){
+	    	  return protein_accn.trim();
 	      }
 	      else{
 	    	  return protein_accn; 

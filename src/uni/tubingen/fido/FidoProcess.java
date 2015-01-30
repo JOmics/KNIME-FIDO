@@ -54,7 +54,7 @@ public class FidoProcess {
       //    throw new IllegalStateException("The Fido program was not found!!");
       // }
 
-        File fido_program = new File("/Users/enrique/Desktop/command_fido"); //partial solution- no funcional in other platform!!!
+        File fido_program = new File("/media/Datos/TRABAJO/KNIME workflow/workspace/FidoProteinInference/src/resources");  //partial solution- no functional in other platform!!!
         
         FidoProcess.ALFA_PARAMETER = alfa;
         FidoProcess.BETA_PARAMETER = beta;
@@ -91,7 +91,7 @@ public class FidoProcess {
             	 proba_proteins = s.split(regex, 2);
             	  StringTokenizer st = new StringTokenizer(proba_proteins[1]);
             	     while (st.hasMoreTokens()) {
-            	    	 String token = st.nextToken(); //the prtein ID string can't the follow patterns: " { } , " ...in this case it will be rejected
+            	    	 String token = st.nextToken(); //the protein ID string can't the follow patterns: " { } , " ...in this case it will be rejected
             	    	   if (!token.contains("{") && !token.contains(",") && !token.contains("}")){ //token is protein ID?
             	    		   proba_protList.put(token, proba_proteins[0]);
             	    	   }       
