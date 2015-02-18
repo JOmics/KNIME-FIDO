@@ -18,8 +18,8 @@
          point="org.knime.workbench.repository.nodes">
       <node
             category-path="/"
-            factory-class="uni.tubingen.fido.FidoProteinInferenceNodeFactory"
-            id="uni.tubingen.FidoProteinInferenceNodeFactory"/>
+            factory-class="uni.tubingen.inference.fido.FidoProteinInferenceNodeFactory"
+            id="uni.tubingen.inference.fido.FidoProteinInferenceNodeFactory"/>
    </extension>
    
 </plugin>
