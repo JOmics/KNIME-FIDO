@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -12,9 +11,6 @@ import java.util.StringTokenizer;
 public class FidoProcess {
 	
 	//fields
-
-    private static volatile FidoProcess instance = null;
-
     private String gammaParameter = null;
 
     private String betaParameter = null;
@@ -94,7 +90,6 @@ public class FidoProcess {
         }
         
         return proba_protList;
-
     }
 
 

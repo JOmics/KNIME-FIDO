@@ -34,30 +34,34 @@ public class FidoChooseParametersProcess {
 		HashMap<String, String> proba_protList = new  HashMap<String, String>();
 		
 		try {
+			System.out.println("will call:\n\t" + pb.command());
+			
 			Process p = pb.start();
 			
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			//BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			
 			// read the output from the command
 			String s;
-			while ((s = stdInput.readLine()) != null && s.contains(" {")){
-				String [] proba_proteins = s.split(" ", 2);
-				
-				StringTokenizer st = new StringTokenizer(proba_proteins[1], " ");
-				while (st.hasMoreTokens()) {
-					String token = st.nextToken();
-					if (!token.equals("{") && !token.equals(",") && !token.equals("}")) {
-						proba_protList.put(token, proba_proteins[0]);
+			while ((s = stdInput.readLine()) != null) {
+				if (s.contains(" {")){
+					String [] proba_proteins = s.split(" ", 2);
+					
+					StringTokenizer st = new StringTokenizer(proba_proteins[1], " ");
+					while (st.hasMoreTokens()) {
+						String token = st.nextToken();
+						if (!token.equals("{") && !token.equals(",") && !token.equals("}")) {
+							proba_protList.put(token, proba_proteins[0]);
+						}
 					}
 				}
 			}
-			/*
-			System.out.println("Here is the standard error of the command (if any):\n");
+			
+			System.out.println("Here is the standard error of the command (shows the best params):\n");
 			while ((s = stdError.readLine()) != null) {
 				System.out.println(s);
 			}
-			*/
+			
 		} catch (IOException e) {
 			System.out.println("exception happened - here's what I know: ");
 			e.printStackTrace();

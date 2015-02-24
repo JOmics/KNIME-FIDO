@@ -3,24 +3,15 @@ package uni.tubingen.inference.fido;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DoubleValue;
 import org.knime.core.data.StringValue;
-import org.knime.core.node.InvalidSettingsException;
-import org.knime.core.node.NotConfigurableException;
 import org.knime.core.node.defaultnodesettings.DefaultNodeSettingsPane;
-import org.knime.core.node.defaultnodesettings.DialogComponent;
 import org.knime.core.node.defaultnodesettings.DialogComponentBoolean;
 import org.knime.core.node.defaultnodesettings.DialogComponentColumnNameSelection;
 import org.knime.core.node.defaultnodesettings.DialogComponentNumber;
-import org.knime.core.node.defaultnodesettings.DialogComponentStringSelection;
+import org.knime.core.node.defaultnodesettings.DialogComponentString;
 import org.knime.core.node.defaultnodesettings.SettingsModelBoolean;
-import org.knime.core.node.defaultnodesettings.SettingsModelDouble;
 import org.knime.core.node.defaultnodesettings.SettingsModelDoubleBounded;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
-import org.knime.core.node.port.PortObjectSpec;
 import org.knime.core.node.util.ColumnFilter;
-
-
-
-
 
 /**
  * <code>NodeDialog</code> for the "FidoProteinInference" Node.
@@ -72,10 +63,11 @@ public class FidoProteinInferenceNodeDialog extends DefaultNodeSettingsPane {
               
                
                addDialogComponent(new DialogComponentBoolean(new SettingsModelBoolean(FidoProteinInferenceNodeModel.CFGKEY_CHOOSE_PARAMETERS, true), "choose parameters"));
+               addDialogComponent(new DialogComponentString(new SettingsModelString(FidoProteinInferenceNodeModel.CFGKEY_DECOY_LABEL, "REVERSED"), "decoy label"));
                
+               addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_GAMMA_PARAMETER, 0.5, 0.0, 1.0), "Gamma", 0.01));
                addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_ALPHA_PARAMETER, 0.1, 0.0, 1.0), "Alpha", 0.01));
                addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_BETA_PARAMETER, 0.01, 0.0, 1.0), "Beta", 0.01));
-               addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_GAMMA_PARAMETER, 0.5, 0.0, 1.0), "Gamma", 0.01));
 
                //addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(FidoProteinInferenceNodeModel.CFGKEY_ALGO, items[0]), "Algorithm", items));
              }

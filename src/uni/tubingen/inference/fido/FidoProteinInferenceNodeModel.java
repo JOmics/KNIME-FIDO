@@ -9,10 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
 import org.knime.core.data.DataColumnSpecCreator;
@@ -59,12 +57,14 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     static final String CFGKEY_PROBA = "probabilities";
 
 	static final String CFGKEY_CHOOSE_PARAMETERS = "choose";
+	static final String CFGKEY_DECOY_LABEL = "decoy_label";
 	
 	static final String CFGKEY_ALPHA_PARAMETER = "alpha";
 	static final String CFGKEY_BETA_PARAMETER = "beta";
 	static final String CFGKEY_GAMMA_PARAMETER = "gamma";
 	
 	private final SettingsModelBoolean choose_parameters = new SettingsModelBoolean(CFGKEY_CHOOSE_PARAMETERS, true);
+	private final SettingsModelString decoy_label_parameter = new SettingsModelString(CFGKEY_DECOY_LABEL, "REVERSED");
 	
 	private final SettingsModelDoubleBounded alpha_parameter = new SettingsModelDoubleBounded(CFGKEY_ALPHA_PARAMETER, 0.1, 0.0, 1.0);
 	private final SettingsModelDoubleBounded beta_parameter  = new SettingsModelDoubleBounded(CFGKEY_BETA_PARAMETER, 0.01, 0.0, 1.0);
@@ -121,7 +121,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     	
     	HashSet<Integer> targets = new HashSet<Integer>();
     	HashSet<Integer> decoys = new HashSet<Integer>();
-    	String decoyLabel = "REVERSED";
+    	String decoyLabel = this.decoy_label_parameter.getStringValue();
     	
     	
     	logger.info("Processing raw input rows");
@@ -359,6 +359,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
         m_accsn_column.saveSettingsTo(settings);
         m_proba_column.saveSettingsTo(settings);
         
+        decoy_label_parameter.saveSettingsTo(settings);
         choose_parameters.saveSettingsTo(settings);
         
         alpha_parameter.saveSettingsTo(settings);
@@ -376,6 +377,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
          m_accsn_column.loadSettingsFrom(settings);
          m_proba_column.loadSettingsFrom(settings);
          
+         decoy_label_parameter.loadSettingsFrom(settings);
          choose_parameters.loadSettingsFrom(settings);
          
          alpha_parameter.loadSettingsFrom(settings);
@@ -393,6 +395,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     	m_accsn_column.validateSettings(settings);
     	m_proba_column.validateSettings(settings);
     	
+    	decoy_label_parameter.validateSettings(settings);
     	choose_parameters.validateSettings(settings);
     	
     	alpha_parameter.validateSettings(settings);
