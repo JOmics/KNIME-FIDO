@@ -3,7 +3,9 @@ package uni.tubingen.inference.fido;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 
@@ -30,8 +32,8 @@ public class FidoChooseParametersProcess {
     }
     
     
-    public HashMap<String, String> computeProteinInference(){
-		HashMap<String, String> proba_protList = new  HashMap<String, String>();
+    public HashMap<List<String>, String> computeProteinInference(){
+    	HashMap<List<String>, String> proba_protList = new  HashMap<List<String>, String>();
 		
 		try {
 			System.out.println("will call:\n\t" + pb.command());
@@ -47,11 +49,14 @@ public class FidoChooseParametersProcess {
 				if (s.contains(" {")){
 					String [] proba_proteins = s.split(" ", 2);
 					
+					List<String> proteinAccessions = new ArrayList<String>();
+					proba_protList.put(proteinAccessions, proba_proteins[0]);
+					
 					StringTokenizer st = new StringTokenizer(proba_proteins[1], " ");
 					while (st.hasMoreTokens()) {
 						String token = st.nextToken();
 						if (!token.equals("{") && !token.equals(",") && !token.equals("}")) {
-							proba_protList.put(token, proba_proteins[0]);
+							proteinAccessions.add(token);
 						}
 					}
 				}

@@ -68,8 +68,6 @@ public class FidoProteinInferenceNodeDialog extends DefaultNodeSettingsPane {
                addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_GAMMA_PARAMETER, 0.5, 0.0, 1.0), "Gamma", 0.01));
                addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_ALPHA_PARAMETER, 0.1, 0.0, 1.0), "Alpha", 0.01));
                addDialogComponent(new DialogComponentNumber(new SettingsModelDoubleBounded(FidoProteinInferenceNodeModel.CFGKEY_BETA_PARAMETER, 0.01, 0.0, 1.0), "Beta", 0.01));
-
-               //addDialogComponent(new DialogComponentStringSelection(new SettingsModelString(FidoProteinInferenceNodeModel.CFGKEY_ALGO, items[0]), "Algorithm", items));
              }
 }
 
