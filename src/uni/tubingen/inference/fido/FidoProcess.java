@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.regex.Matcher;
 
 
 public class FidoProcess {
@@ -41,10 +41,8 @@ public class FidoProcess {
 	
 	
 	public HashMap<List<String>, String> computeProteinInference(){
-		String s;
-		String [] proba_proteins = new String [1];
 		HashMap<List<String>, String> proba_protList = new  HashMap<List<String>, String>();
-		String regex = " ";
+		//String regex = " ";
 		
 		try {
 			ProcessBuilder pb = new ProcessBuilder(FIDO_COMMAND, psmFile, gammaParameter, alphaParameter, betaParameter);
@@ -58,18 +56,15 @@ public class FidoProcess {
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			
 			// read the output from the command
-			while ((s = stdInput.readLine()) != null && s.contains(regex)){
-				proba_proteins = s.split(regex, 2);
-				
-				List<String> proteinAccessions = new ArrayList<String>();
-				proba_protList.put(proteinAccessions, proba_proteins[0]);
-				
-				StringTokenizer st = new StringTokenizer(proba_proteins[1]);
-				while (st.hasMoreTokens()) {
-					String token = st.nextToken(); //the protein ID string can't the follow patterns: " { } , " ...in this case it will be rejected
-					if (!token.contains("{") && !token.contains(",") && !token.contains("}")) {
-						//token is protein ID
-						proteinAccessions.add(token);
+			String s;
+			while ((s = stdInput.readLine()) != null) {
+				Matcher resultMatcher = FidoProteinInferenceNodeModel.resultPattern.matcher(s);
+				if (resultMatcher.matches()) {
+					List<String> proteinAccessions = new ArrayList<String>();
+					proba_protList.put(proteinAccessions, resultMatcher.group(1));
+					
+					for (String proteinID : resultMatcher.group(2).split(",")) {
+						proteinAccessions.add(proteinID.trim());
 					}
 				}
 			}

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.knime.core.data.DataCell;
 import org.knime.core.data.DataColumnSpec;
@@ -74,6 +75,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
 	private final SettingsModelString m_proba_column   = new SettingsModelString(CFGKEY_PROBA, "Probabilities");
 	//private final SettingsModelString m_algorithm      = new SettingsModelString(CFGKEY_ALGO, "ILP: Minimum Set Cover");
 	
+	static final Pattern resultPattern = Pattern.compile("^(\\S+)\\s+\\{([^\\}]+)\\}$");
 	
 	/**
      * Constructor for the node model.

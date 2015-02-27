@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.regex.Matcher;
 
 
 public class FidoChooseParametersProcess {
@@ -46,18 +46,13 @@ public class FidoChooseParametersProcess {
 			// read the output from the command
 			String s;
 			while ((s = stdInput.readLine()) != null) {
-				if (s.contains(" {")){
-					String [] proba_proteins = s.split(" ", 2);
-					
+				Matcher resultMatcher = FidoProteinInferenceNodeModel.resultPattern.matcher(s);
+				if (resultMatcher.matches()) {
 					List<String> proteinAccessions = new ArrayList<String>();
-					proba_protList.put(proteinAccessions, proba_proteins[0]);
+					proba_protList.put(proteinAccessions, resultMatcher.group(1));
 					
-					StringTokenizer st = new StringTokenizer(proba_proteins[1], " ");
-					while (st.hasMoreTokens()) {
-						String token = st.nextToken();
-						if (!token.equals("{") && !token.equals(",") && !token.equals("}")) {
-							proteinAccessions.add(token);
-						}
+					for (String proteinID : resultMatcher.group(2).split(",")) {
+						proteinAccessions.add(proteinID.trim());
 					}
 				}
 			}
