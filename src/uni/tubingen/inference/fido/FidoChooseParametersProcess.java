@@ -57,14 +57,17 @@ public class FidoChooseParametersProcess {
 				}
 			}
 			
-			System.out.println("Here is the standard error of the command (shows the best params):\n");
+			StringBuilder outSb = new StringBuilder();
 			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+				outSb.append(s);
+				outSb.append("\n");
 			}
-			
+			if (outSb.length() > 0) {
+				FidoProteinInferenceNodeModel.logger.warn("Fido prints best parameter info to STDERR, so this might be useful or an error:\n"
+						+ outSb.toString());
+			}
 		} catch (IOException e) {
-			System.out.println("exception happened - here's what I know: ");
-			e.printStackTrace();
+			FidoProteinInferenceNodeModel.logger.error(e);
 		}
 		return proba_protList;
     }

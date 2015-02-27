@@ -70,13 +70,12 @@ public class FidoProcess {
 			}
 			
 			// read any errors from the attempted command
-			System.out.println("Here is the standard error of the command (if any):\n");
 			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+				FidoProteinInferenceNodeModel.logger.warn("Fido puts info to STDERR, this might be an error:\n"
+						+ s);
 			}
 		} catch (IOException e) {
-			System.out.println("exception happened - here's what I know: ");
-			e.printStackTrace();
+			FidoProteinInferenceNodeModel.logger.error(e);
 		}
 		
 		return proba_protList;

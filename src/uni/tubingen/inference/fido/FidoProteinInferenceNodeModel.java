@@ -47,8 +47,7 @@ public class FidoProteinInferenceNodeModel extends NodeModel {
     
 	 // the logger instance
    
-	private static final NodeLogger logger = NodeLogger
-            .getLogger("Protein Fido probabilities");
+	protected static final NodeLogger logger = NodeLogger.getLogger("FidoProteinInference");
 	
 	static final String CFGKEY_PEPTIDES = "peptides";
 	static final String CFGKEY_PROTEIN  = "protein";
