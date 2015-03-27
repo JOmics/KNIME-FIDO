@@ -1,8 +1,10 @@
 package uni.tubingen.inference.fido;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +13,25 @@ import java.util.regex.Matcher;
 
 public class FidoChooseParametersProcess {
 	
-    private static final String FIDO_COMMAND = "FidoChooseParameters";
-    
     private ProcessBuilder pb;
 
 
     public FidoChooseParametersProcess(String psmFile, String targetdecoyFile, boolean useGrouping) {
-        this.pb = new ProcessBuilder(FIDO_COMMAND, "-p");
+    	
+    	String fidoPath = null;
+		try {
+	    	fidoPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			if (!fidoPath.endsWith(File.separator)) {
+				// we are in the jar, only get the path to it
+				fidoPath = fidoPath.substring(0, fidoPath.lastIndexOf(File.separator) + 1);
+			}
+			fidoPath += "executables" + File.separator + "FidoChooseParameters";
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        this.pb = new ProcessBuilder(fidoPath, "-p");
         
         if (useGrouping) {
             pb.command().add("-g");

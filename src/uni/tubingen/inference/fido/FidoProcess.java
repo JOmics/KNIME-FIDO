@@ -1,7 +1,7 @@
 package uni.tubingen.inference.fido;
 
 import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +18,6 @@ public class FidoProcess {
 	private String betaParameter = null;
 	
 	private String psmFile = null;
-	
-	private static final String FIDO_COMMAND = "Fido";
 	
 	
 	/**
@@ -45,7 +43,14 @@ public class FidoProcess {
 		//String regex = " ";
 		
 		try {
-			ProcessBuilder pb = new ProcessBuilder(FIDO_COMMAND, psmFile, gammaParameter, alphaParameter, betaParameter);
+			String fidoPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			if (!fidoPath.endsWith(File.separator)) {
+				// we are in the jar, only get the path to it
+				fidoPath = fidoPath.substring(0, fidoPath.lastIndexOf(File.separator) + 1);
+			}
+			fidoPath += "executables" + File.separator + "Fido";
+			
+			ProcessBuilder pb = new ProcessBuilder(fidoPath, psmFile, gammaParameter, alphaParameter, betaParameter);
 			pb.directory(null);
 			
 			System.out.println("will call:\n\t" + pb.command());
@@ -74,7 +79,7 @@ public class FidoProcess {
 				FidoProteinInferenceNodeModel.logger.warn("Fido puts info to STDERR, this might be an error:\n"
 						+ s);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			FidoProteinInferenceNodeModel.logger.error(e);
 		}
 		
